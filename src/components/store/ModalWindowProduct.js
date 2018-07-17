@@ -4,6 +4,8 @@ import '../css/style_modal.css';
 import {store} from "./index";
 //import {compose} from 'redux';
 import Modal from './Modal';
+//import {removeCategory} from "../category/category";
+//import {compose} from "redux/index";
 
 class ModalWindowProduct extends Component {
     constructor(props) {
@@ -11,7 +13,7 @@ class ModalWindowProduct extends Component {
         this.state = {
             isModalOpen: false
         }
-        //this.re = this.props.handler
+        this.re = this.props.handler
 
     }
 
@@ -41,7 +43,7 @@ class ModalWindowProduct extends Component {
         let title = this.props.title.title;
         let price = this.props.title.price;
         let date = this.props.title.date;
-        //let category = this.props.title.category;
+        let category = this.props.title.category;
         //let _title, _price, _date, _category;
         //console.log(title,price,date,category);
         let date_format = (e) => {
@@ -53,17 +55,77 @@ class ModalWindowProduct extends Component {
         const list_category = store.getState().categories.map((number) =>
             <option value={number.title}>{number.title}</option>
         );
+        const upd = e => {
+            e.preventDefault()
+            // compose(
+            //     store.dispatch(removeCategory(id)),
+            //     store.dispatch(addCategory(_title.value)),
+            // );
+            this.closeModal()
+            this.re(e)
+        }
+        const del = e => {
+            e.preventDefault()
+            // compose(
+            //     store.dispatch(removeCategory(id))
+            // );
+            this.closeModal()
+            this.re(e)
+        }
         return (
             <div>
                 <button onClick={() => this.openModal()}>{this.props.title.title}</button>
                 <Modal isOpen={this.state.isModalOpen} onClose={() => this.closeModal()}>
-                    <table ></table>
-                    <p>Старое название:{title}</p>
-                    <p>Старое цена:{price}</p>
-                    <input type="date" value={date_format(date)}/>
-                    <select>
-                        {list_category}
-                    </select>
+                    <table>
+                        <tr>
+                            <td>Старое название:</td>
+                            <td>{title}</td>
+                        </tr>
+                        <tr>
+                            <td>Новая название:</td>
+                            <td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td>Старое цена:</td>
+                            <td>{price}</td>
+                        </tr>
+                        <tr>
+                            <td>Новая цена:</td>
+                            <td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td>Дата:</td>
+                            <td><input type="date" value={date_format(date)}/></td>
+                        </tr>
+                        <tr>
+                            <td>Категория:</td>
+                            <td>
+                                <select value={category}>
+                                    {list_category}
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="button" onClick={upd} value="Изменить"/>
+                            </td>
+                            <td>
+                                <input type="button" onClick={del} value="Удалить" className="del"/>
+                            </td>
+                        </tr>
+                    </table>
+                    {/*<p>Старое название:{title}</p>*/}
+                    {/*<p>Новая название:<input type="text" /></p>*/}
+                    {/*<p>Старое цена:{price}</p>*/}
+                    {/*<p>Новая цена<input type="text" /></p>*/}
+                    {/*<input type="date" value={date_format(date)}/>*/}
+                    {/*<select>*/}
+                        {/*{list_category}*/}
+                    {/*</select>*/}
+                    {/*<p>*/}
+                        {/*<input type="button" onClick={upd} value="Изменить"/>*/}
+                        {/*<input type="button" onClick={del} value="Удалить" className="del"/>*/}
+                    {/*</p>*/}
                 </Modal>
 
                 {/*<button onClick={() => this.openModal()}>{this.props.title.title}</button>*/}
