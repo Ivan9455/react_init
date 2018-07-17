@@ -40,10 +40,16 @@ class ModalWindowProduct extends Component {
         // }
         let title = this.props.title.title;
         let price = this.props.title.price;
-        //let date = this.props.title.date;
+        let date = this.props.title.date;
         //let category = this.props.title.category;
         //let _title, _price, _date, _category;
         //console.log(title,price,date,category);
+        let date_format = (e) => {
+            let d = new Date(e);
+            let day = (d.getDate() >= 10) ? d.getDate() : "0" + d.getDate();
+            let month = (d.getMonth() >= 10) ? d.getMonth() : "0" + d.getMonth();
+            return d.getFullYear() + "-" + month + "-" + day;
+        }
         const list_category = store.getState().categories.map((number) =>
             <option value={number.title}>{number.title}</option>
         );
@@ -51,9 +57,13 @@ class ModalWindowProduct extends Component {
             <div>
                 <button onClick={() => this.openModal()}>{this.props.title.title}</button>
                 <Modal isOpen={this.state.isModalOpen} onClose={() => this.closeModal()}>
+                    <table ></table>
                     <p>Старое название:{title}</p>
                     <p>Старое цена:{price}</p>
-                    {/*<select>{list_category}</select>*/}
+                    <input type="date" value={date_format(date)}/>
+                    <select>
+                        {list_category}
+                    </select>
                 </Modal>
 
                 {/*<button onClick={() => this.openModal()}>{this.props.title.title}</button>*/}

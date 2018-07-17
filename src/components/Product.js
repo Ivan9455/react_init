@@ -30,7 +30,7 @@ class Product extends Component {
 
             <div>
                 <ModalWindowProduct handler={this.handler} title={number}/>
-                <input type="date" value={date_format(number.date)}/>
+                {/*<input type="date" value={date_format(number.date)}/>*/}
             </div>
         );
         const handleSubmit = e => {
