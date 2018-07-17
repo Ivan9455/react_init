@@ -39,10 +39,10 @@ class ModalWindow extends Component {
                 <button onClick={() => this.openModal()}>{this.props.title.title}</button>
                 <Modal isOpen={this.state.isModalOpen} onClose={() => this.closeModal()}>
                     <p>Старое название:{this.props.title.title}</p>
-                    <p>Новое название<input type="text" ref={input => _title = input}/></p>
+                    <p>Новое название:<input type="text" ref={input => _title = input}/></p>
                     <p>
-                        <input type="button" onClick={upd} value="rename"/>
-                        <input type="button" onClick={del} value="delete" className="del"/>
+                        <input type="button" onClick={upd} value="Изменить"/>
+                        <input type="button" onClick={del} value="Удалить" className="del"/>
                     </p>
                 </Modal>
             </div>

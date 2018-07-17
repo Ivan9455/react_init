@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Menu from "./Menu";
-import {store, populate} from "./store";
+import {store} from "./store";
 import ModalWindowProduct from "./store/ModalWindowProduct";
 import {addProduct} from "./product/products";
 
@@ -20,12 +20,7 @@ class Product extends Component {
         const list_category = store.getState().categories.map((number) =>
             <option value={number.title}>{number.title}</option>
         );
-        let date_format = (e) => {
-            let d = new Date(e);
-            let day = (d.getDate() >= 10) ? d.getDate() : "0" + d.getDate();
-            let month = (d.getMonth() >= 10) ? d.getMonth() : "0" + d.getMonth();
-            return d.getFullYear() + "-" + month + "-" + day;
-        }
+
         const list = store.getState().products.map((number) =>
 
             <div>
@@ -38,7 +33,9 @@ class Product extends Component {
             let get_date = Date.parse(_date.value).valueOf();
             if (_title.value === "") {
                 return alert("Поле название не заполнено!");
-            } else if (_price.value < 0) {
+            }else if(isNaN(_price.value)){
+                return alert("Вы ввели не число!")
+            } else if (_price.value < 0 ) {
                 return alert("Цена не может быть меньше 0!");
             } else if (isNaN(get_date)) {
                 return alert("Вы не указали дату!");

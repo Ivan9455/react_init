@@ -17,7 +17,7 @@ class ModalWindowProduct extends Component {
 
     render() {
         // let date = new Date().valueOf();
-        // let _title,_price,_date,_category, id = this.props.title.id
+        let _title,_price,_date,_category, id = this.props.title.id
         // const upd = e => {
         //     e.preventDefault()
         //     if(date>_date.valueOf()){
@@ -68,10 +68,10 @@ class ModalWindowProduct extends Component {
 
                 {/*<button onClick={() => this.openModal()}>{this.props.title.title}</button>*/}
                 {/*<Modal isOpen={this.state.isModalOpen} onClose={() => this.closeModal()}>*/}
-                    {/*<p>Старое название:{title}</p>*/}
-                    {/*<p>Старое цена:{price}</p>*/}
-                    {/*<p>Годен до:{new Date(date)}</p>*/}
-                    {/*<select>{list_category}</select>*/}
+                {/*<p>Старое название:{title}</p>*/}
+                {/*<p>Старое цена:{price}</p>*/}
+                {/*<p>Годен до:{new Date(date)}</p>*/}
+                {/*<select>{list_category}</select>*/}
                 {/*</Modal>*/}
             </div>
         )
