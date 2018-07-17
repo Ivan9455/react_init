@@ -1,6 +1,6 @@
-import {  createStore, combineReducers, applyMiddleware,compose } from 'redux'
-import {products,addProduct} from '../product/products'
-import { categories} from "../category/category";
+import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
+import {products} from '../product/products'
+import {categories} from "../category/category";
 
 export const logger = store => next => action => {
     let result
@@ -19,21 +19,25 @@ export const saver = store => next => action => {
     return result
 }
 
-export const store = applyMiddleware(logger,saver)(createStore)(
-    combineReducers({ products,categories }),
+export const store = applyMiddleware(logger, saver)(createStore)(
+    combineReducers({products, categories}),
     (localStorage['redux-store']) ?
         JSON.parse(localStorage['redux-store']) :
         {}
 )
 
 
-
 export const populate = compose(
     () => console.log('products coung', store.getState().products.length),
-    () => store.dispatch(addProduct("Big Blue")),
-    //() => store.dispatch(addCategory("B12121212")),
-    () => store.dispatch(addProduct("Tomato")),
-    () => store.dispatch(addProduct("lawn")),
-    () => store.dispatch(addProduct("Party Pink"))
+    () => console.log(store.getState().products = [])//все удаляет
+    // () => console.log('1',    store.getState().products.map((number) =>
+    //     removeProduct(number.id)
+    // ))
+    // () => store.dispatch(addProduct("Big Blue")),
+    // () => store.dispatch(addCategory("B12121212")),
+    // () => store.dispatch(addProduct("Tomato")),
+    // () => store.dispatch(addProduct("lawn")),
+    // () => store.dispatch(addProduct("Party Pink"))
 )
+
 

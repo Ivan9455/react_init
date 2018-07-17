@@ -3,6 +3,7 @@ import '../css/style_modal.css';
 import {addCategory, removeCategory} from '../category/category'
 import {store} from "./index";
 import {compose} from 'redux';
+import Modal from './Modal';
 
 class ModalWindow extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class ModalWindow extends Component {
         this.re = this.props.handler
 
     }
+
     render() {
         let _title, id = this.props.title.id
         const upd = e => {
@@ -53,30 +55,6 @@ class ModalWindow extends Component {
 
     closeModal() {
         this.setState({isModalOpen: false})
-    }
-}
-
-class Modal extends Component {
-    render() {
-        if (this.props.isOpen === false)
-            return null
-
-        return (
-            <div>
-                <div className="modal_st">
-                    {this.props.children}
-                </div>
-                <div className="bg_st" onClick={e => this.close(e)}/>
-            </div>
-        )
-    }
-
-    close(e) {
-        e.preventDefault()
-
-        if (this.props.onClose) {
-            this.props.onClose()
-        }
     }
 }
 

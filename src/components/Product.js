@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Menu from "./Menu";
-import {store} from "./store";
+import {store, populate} from "./store";
 import ModalWindowProduct from "./store/ModalWindowProduct";
 import {addProduct} from "./product/products";
 
@@ -11,17 +11,27 @@ class Product extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange(event,title,price,date,category) {
-        store.dispatch(addProduct(title.value, price.value, date.value, category.value));
+    handleChange(event) {
         this.setState(event);
     }
+
     render() {
         let _title, _price, _date, _category
         const list_category = store.getState().categories.map((number) =>
             <option value={number.title}>{number.title}</option>
         );
+        let date_format = (e) => {
+            let d = new Date(e);
+            let day = (d.getDate() >= 10) ? d.getDate() : "0" + d.getDate();
+            let month = (d.getMonth() >= 10) ? d.getMonth() : "0" + d.getMonth();
+            return d.getFullYear() + "-" + month + "-" + day;
+        }
         const list = store.getState().products.map((number) =>
-            <ModalWindowProduct handler={this.handler} title={number}/>
+
+            <div>
+                <ModalWindowProduct handler={this.handler} title={number}/>
+                <input type="date" value={date_format(number.date)}/>
+            </div>
         );
         const handleSubmit = e => {
             let d = new Date();
@@ -30,14 +40,15 @@ class Product extends Component {
                 return alert("Поле название не заполнено!");
             } else if (_price.value < 0) {
                 return alert("Цена не может быть меньше 0!");
-            }else if(isNaN(get_date)){
+            } else if (isNaN(get_date)) {
                 return alert("Вы не указали дату!");
             } else if (get_date < d.valueOf()) {
                 return alert("Годность товара не может быть проставленна задним числом!");
             }
             //compose(store.dispatch(addProduct(_title.value,_price.value,_date.value,_category.value)));
             console.log(_title.value, _price.value, get_date, _category.value)
-            this.handleChange(e,_title.value, _price.value, get_date, _category.value);
+            store.dispatch(addProduct(_title.value, _price.value, _date.value, _category.value));
+            this.handleChange(e);
         }
         return (
             <div>
