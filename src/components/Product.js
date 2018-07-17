@@ -8,11 +8,12 @@ import {addProduct} from "./product/products";
 class Product extends Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
+        this.handler = this.handler.bind(this)
     }
 
-    handleChange(event) {
-        this.setState(event);
+    handler(e) {
+        e.preventDefault()
+        this.setState(e)
     }
 
     render() {
@@ -22,7 +23,6 @@ class Product extends Component {
         );
 
         const list = store.getState().products.map((number) =>
-
             <div>
                 <ModalWindowProduct handler={this.handler} title={number}/>
                 {/*<input type="date" value={date_format(number.date)}/>*/}
@@ -43,9 +43,9 @@ class Product extends Component {
                 return alert("Годность товара не может быть проставленна задним числом!");
             }
             //compose(store.dispatch(addProduct(_title.value,_price.value,_date.value,_category.value)));
-            console.log(_title.value, _price.value, get_date, _category.value)
+            //console.log(_title.value, _price.value, get_date, _category.value)
             store.dispatch(addProduct(_title.value, _price.value, _date.value, _category.value));
-            this.handleChange(e);
+            this.handler(e);
         }
         return (
             <div>

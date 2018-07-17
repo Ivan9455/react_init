@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import '../css/style_modal.css';
-//import {addProduct, removeProduct} from '../product/products'
 import {store} from "./index";
-//import {compose} from 'redux';
 import Modal from './Modal';
-//import {removeCategory} from "../category/category";
-//import {compose} from "redux/index";
+import {addProduct, removeProduct} from "../product/products";
+import {compose} from "redux";
 
 class ModalWindowProduct extends Component {
     constructor(props) {
@@ -14,7 +12,6 @@ class ModalWindowProduct extends Component {
             isModalOpen: false
         }
         this.re = this.props.handler
-
     }
 
     render() {
@@ -56,21 +53,32 @@ class ModalWindowProduct extends Component {
             <option value={number.title}>{number.title}</option>
         );
         const upd = e => {
-            e.preventDefault()
-            // compose(
-            //     store.dispatch(removeCategory(id)),
-            //     store.dispatch(addCategory(_title.value)),
-            // );
-            this.closeModal()
-            this.re(e)
+            let d = new Date();
+            let get_date = Date.parse(_date.value).valueOf();
+            if (_title.value === "") {
+                return alert("Поле название не заполнено!");
+            }else if(isNaN(_price.value)){
+                return alert("Вы ввели не число!")
+            } else if (_price.value < 0 ) {
+                return alert("Цена не может быть меньше 0!");
+            } else if (isNaN(get_date)) {
+                return alert("Вы не указали дату!");
+            } else if (get_date < d.valueOf()) {
+                return alert("Годность товара не может быть проставленна задним числом!");
+            }
+            compose(
+                store.dispatch(removeProduct(id)),
+                store.dispatch(addProduct(_title.value, _price.value, _date.value, _category.value))
+            );
+            this.closeModal();
+            this.re(e);
         }
         const del = e => {
-            e.preventDefault()
-            // compose(
-            //     store.dispatch(removeCategory(id))
-            // );
-            this.closeModal()
-            this.re(e)
+            compose(
+                store.dispatch(removeProduct(id))
+            );
+            this.closeModal();
+            this.re(e);
         }
         return (
             <div>
@@ -83,7 +91,7 @@ class ModalWindowProduct extends Component {
                         </tr>
                         <tr>
                             <td>Новая название:</td>
-                            <td><input type="text" /></td>
+                            <td><input type="text" ref={input => _title = input}/></td>
                         </tr>
                         <tr>
                             <td>Старое цена:</td>
@@ -91,16 +99,16 @@ class ModalWindowProduct extends Component {
                         </tr>
                         <tr>
                             <td>Новая цена:</td>
-                            <td><input type="text" /></td>
+                            <td><input type="text" ref={input => _price = input}/></td>
                         </tr>
                         <tr>
                             <td>Дата:</td>
-                            <td><input type="date" value={date_format(date)}/></td>
+                            <td><input type="date" value={date_format(date)} ref={input => _date = input}/></td>
                         </tr>
                         <tr>
                             <td>Категория:</td>
                             <td>
-                                <select value={category}>
+                                <select value={category} ref={input => _category = input}>
                                     {list_category}
                                 </select>
                             </td>
@@ -114,27 +122,9 @@ class ModalWindowProduct extends Component {
                             </td>
                         </tr>
                     </table>
-                    {/*<p>Старое название:{title}</p>*/}
-                    {/*<p>Новая название:<input type="text" /></p>*/}
-                    {/*<p>Старое цена:{price}</p>*/}
-                    {/*<p>Новая цена<input type="text" /></p>*/}
-                    {/*<input type="date" value={date_format(date)}/>*/}
-                    {/*<select>*/}
-                        {/*{list_category}*/}
-                    {/*</select>*/}
-                    {/*<p>*/}
-                        {/*<input type="button" onClick={upd} value="Изменить"/>*/}
-                        {/*<input type="button" onClick={del} value="Удалить" className="del"/>*/}
-                    {/*</p>*/}
+
                 </Modal>
 
-                {/*<button onClick={() => this.openModal()}>{this.props.title.title}</button>*/}
-                {/*<Modal isOpen={this.state.isModalOpen} onClose={() => this.closeModal()}>*/}
-                {/*<p>Старое название:{title}</p>*/}
-                {/*<p>Старое цена:{price}</p>*/}
-                {/*<p>Годен до:{new Date(date)}</p>*/}
-                {/*<select>{list_category}</select>*/}
-                {/*</Modal>*/}
             </div>
         )
     }

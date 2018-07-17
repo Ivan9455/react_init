@@ -12,7 +12,6 @@ class ModalWindow extends Component {
             isModalOpen: false
         }
         this.re = this.props.handler
-
     }
 
     render() {
@@ -28,6 +27,9 @@ class ModalWindow extends Component {
         }
         const del = e => {
             e.preventDefault()
+            if (store.getState().products.map((str) => str.title === this.props.title.title)) {
+                return alert("Не возможно удалить даннуюь категорию. \nПока существует хоть один товар с данной категорией!");
+            }
             compose(
                 store.dispatch(removeCategory(id))
             );
