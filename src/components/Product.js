@@ -67,8 +67,7 @@ class Product extends Component {
                         </tr>
                         <tr>
                             <td>Категория:</td>
-                            <td><select ref={input => _category = input}
-                                        onChange={this.handleChange}>{list_category}</select></td>
+                            <td><select ref={input => _category = input}>{list_category}</select></td>
                         </tr>
                         <tr>
                             <td colSpan="2"><input type="button" value="Создать" onClick={handleSubmit}/></td>

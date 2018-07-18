@@ -15,38 +15,16 @@ class ModalWindowProduct extends Component {
     }
 
     render() {
-        // let date = new Date().valueOf();
-        let _title,_price,_date,_category, id = this.props.title.id
-        // const upd = e => {
-        //     e.preventDefault()
-        //     if(date>_date.valueOf()){
-        //         return alert("срок годности не может быть меньше текущей даты!");
-        //     }
-        //     compose(
-        //         store.dispatch(removeProduct(id)),
-        //         store.dispatch(addProduct(_title.value,_price.value,_date.valueOf(),_category.value)),
-        //     );
-        //     this.closeModal()
-        //     this.re(e)
-        // }
-        // const del = e => {
-        //     e.preventDefault()
-        //     compose(
-        //         store.dispatch(removeProduct(id))
-        //     );
-        //     this.closeModal()
-        //     this.re(e)
-        // }
+        let _title, _price, _date, _category, id = this.props.title.id
         let title = this.props.title.title;
         let price = this.props.title.price;
         let date = this.props.title.date;
         let category = this.props.title.category;
-        //let _title, _price, _date, _category;
-        //console.log(title,price,date,category);
         let date_format = (e) => {
             let d = new Date(e);
             let day = (d.getDate() >= 10) ? d.getDate() : "0" + d.getDate();
-            let month = (d.getMonth() >= 10) ? d.getMonth() : "0" + d.getMonth();
+            let d_month = d.getMonth() + 1;
+            let month = (d_month >= 10) ? d_month : "0" + d_month;
             return d.getFullYear() + "-" + month + "-" + day;
         }
         const list_category = store.getState().categories.map((number) =>
@@ -57,9 +35,9 @@ class ModalWindowProduct extends Component {
             let get_date = Date.parse(_date.value).valueOf();
             if (_title.value === "") {
                 return alert("Поле название не заполнено!");
-            }else if(isNaN(_price.value)){
+            } else if (isNaN(_price.value)) {
                 return alert("Вы ввели не число!")
-            } else if (_price.value < 0 ) {
+            } else if (_price.value < 0) {
                 return alert("Цена не может быть меньше 0!");
             } else if (isNaN(get_date)) {
                 return alert("Вы не указали дату!");
@@ -102,13 +80,21 @@ class ModalWindowProduct extends Component {
                             <td><input type="text" ref={input => _price = input}/></td>
                         </tr>
                         <tr>
-                            <td>Дата:</td>
-                            <td><input type="date" value={date_format(date)} ref={input => _date = input}/></td>
+                            <td>Старая дата:</td>
+                            <td>{date_format(date)}</td>
                         </tr>
                         <tr>
-                            <td>Категория:</td>
+                            <td>Дата:</td>
+                            <td><input type="date" ref={input => _date = input}/></td>
+                        </tr>
+                        <tr>
+                            <td>Старая категория:</td>
+                            <td>{category}</td>
+                        </tr>
+                        <tr>
+                            <td>Новая категория:</td>
                             <td>
-                                <select value={category} ref={input => _category = input}>
+                                <select ref={input => _category = input}>
                                     {list_category}
                                 </select>
                             </td>

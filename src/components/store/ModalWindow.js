@@ -16,8 +16,17 @@ class ModalWindow extends Component {
 
     render() {
         let _title, id = this.props.title.id
+        const check = () => {
+
+        }
         const upd = e => {
-            e.preventDefault()
+            for (let i = 0; i < store.getState().products.length; i++) {
+                if (store.getState().products[i].category === this.props.title.title ||
+                    store.getState().products[i].category === _title.value) {
+                    console.log(store.getState().products[i].category + " " + this.props.title.title + " " + _title.value);
+                    return alert("Не возможно удалить даннуюь категорию. \nПока существует хоть один товар с данной категорией!");;
+                }
+            }
             compose(
                 store.dispatch(removeCategory(id)),
                 store.dispatch(addCategory(_title.value)),
@@ -26,9 +35,11 @@ class ModalWindow extends Component {
             this.re(e)
         }
         const del = e => {
-            e.preventDefault()
-            if (store.getState().products.map((str) => str.title === this.props.title.title)) {
-                return alert("Не возможно удалить даннуюь категорию. \nПока существует хоть один товар с данной категорией!");
+            for (let i = 0; i < store.getState().products.length; i++) {
+                if (store.getState().products[i].category === this.props.title.title) {
+                    console.log(store.getState().products[i].category + " " + this.props.title.title );
+                    return alert("Не возможно удалить даннуюь категорию. \nПока существует хоть один товар с данной категорией!");;
+                }
             }
             compose(
                 store.dispatch(removeCategory(id))

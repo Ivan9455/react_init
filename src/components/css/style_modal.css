@@ -22,3 +22,6 @@
 .del{
     float: right;
 }
+td {
+    padding: 3px;
+}
